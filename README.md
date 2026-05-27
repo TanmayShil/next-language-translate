@@ -299,6 +299,7 @@ This package helps:
 ---
 ### 📌 Step 7 — Create Translation Function
 ## api/api.function.ts
+```
 export const translateTextFns = async (
   text: string,
   target: string,
@@ -309,6 +310,7 @@ export const translateTextFns = async (
     });
   return response.data.translatedText;
 };
+```
 
 ---
 ### 📌 Step 8 — Why TanStack Query?
