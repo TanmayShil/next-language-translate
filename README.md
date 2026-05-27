@@ -25,3 +25,17 @@ The application supports dynamic language translation for both static UI text an
 ### 🧠 Custom translation hooks
 
 ---
+### 🛠 Tech Stack
+
+| Technology             | Purpose                 |
+| ---------------------- | ----------------------- |
+| Next.js                | React Framework         |
+| TypeScript             | Type Safety             |
+| Tailwind CSS           | Styling                 |
+| shadcn/ui              | UI Components           |
+| Magic UI               | Animation/UI Effects    |
+| i18next                | Internationalization    |
+| React Query            | API State Management    |
+| FakeStore API          | Product Data            |
+| google-translate-api-x | Dynamic Translation API |
+
