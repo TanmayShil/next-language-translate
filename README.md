@@ -198,8 +198,8 @@ i18n
 export default i18n;
 ```
 ---
-### Step 3 — Translation JSON Files
----
+### 📌 Step 3 — Translation JSON Files
+
 ## locales/en/common.json
 ```
 {
@@ -225,3 +225,119 @@ export default i18n;
 }
 ```
 ---
+### 📌 Step 4 — Why Static Translation Is Not Enough?
+i18next works perfectly for static text.
+But API product data comes dynamically:
+```
+title
+description
+category
+```
+These values are not stored in JSON files.
+So we need:
+✅ Backend Translation API
+
+---
+### 📌 Step 5 — Create Translation API Route
+
+## Why API Route?
+Because:
+- Dynamic product data changes
+- We cannot manually store all translations
+- API translates text in real-time
+  
+## app/api/translate/route.ts
+```
+import { NextRequest, NextResponse } from "next/server";
+import translate from "google-translate-api-x";
+
+import {
+  RequestBody,
+  TranslationResponse,
+} from "@/@type/product";
+
+export async function POST(
+  req: NextRequest,
+): Promise<NextResponse<TranslationResponse>> {
+
+  let body: RequestBody | null = null;
+
+  try {
+    body = await req.json();
+
+    const result = await translate(body?.text || "", {
+      to: body?.target || "",
+    });
+
+    return NextResponse.json<TranslationResponse>({
+      translatedText: result.text,
+    });
+
+  } catch (error) {
+
+    console.log(error);
+
+    return NextResponse.json<TranslationResponse>(
+      {
+        translatedText: body?.text || "",
+      },
+      {
+        status: 500,
+      },
+    );
+  }
+}
+```
+---
+### 📌 Step 6 — Why google-translate-api-x?
+This package helps:
+- Translate dynamic text
+- No Google Cloud billing setup
+- Easy integration
+- Supports many languages
+  
+---
+### 📌 Step 7 — Create Translation Function
+## api/api.function.ts
+export const translateTextFns = async (
+  text: string,
+  target: string,
+) => {
+  const response = await axios.post("/api/translate", {
+      text,
+      target,
+    });
+  return response.data.translatedText;
+};
+
+---
+### 📌 Step 8 — Why TanStack Query?
+Without TanStack Query:
+- Multiple API calls happen
+- Performance becomes slow
+
+TanStack Query:
+- ✅ Caches translations
+- ✅ Avoids duplicate requests
+- ✅ Improves performance
+
+---
+### 📌 Step 9 — Final Workflow
+```
+User changes language
+        ↓
+i18next updates static text
+        ↓
+React Query detects language change
+        ↓
+Translation hooks call API
+        ↓
+API translates product data
+        ↓
+UI updates dynamically
+```
+---
+## 🙋‍♂️ Author
+
+Made with ❤️ by Tanmay Shil
+GitHub: [@TanmayShil](https://github.com/TanmayShil)
