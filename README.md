@@ -19,8 +19,8 @@ The application supports dynamic language translation for both static UI text an
 - Product title
 - Description
 - Category
-### - ⚡ React Query caching
-### - 🌍 Language auto-detection using:
+### ⚡ React Query caching
+### 🌍 Language auto-detection using:
 - i18next-browser-languagedetector
 ### 🧠 Custom translation hooks
 
